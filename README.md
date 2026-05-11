@@ -2,6 +2,8 @@
 
 这个目录包含用于提取和生成 Google Play App 版本说明（What's new）的辅助工具。
 
+访问地址：https://klook-tech-kerrayli.github.io/google-play-notes/
+
 **使用步骤：**
 1. 拖拽或点击上传 `.xlsx` 文件
 3. 点击版本号标签或手动输入版本号
