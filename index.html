@@ -672,7 +672,7 @@
     </div>
 
     <script>
-        // 语言映射
+        // 语言映射（用于生成XML）
         const langMap = {
             'en-US': 'en_US',
             'de-DE': 'AI - de_DE',
@@ -695,6 +695,9 @@
             'zh-HK': 'zh_HK ',
             'zh-TW': 'zh_TW'
         };
+
+        // 英语相关语言标签（用于合并显示）
+        const enLangTags = ['en-US', 'en-AU', 'en-CA', 'en-GB', 'en-IN', 'en-SG'];
 
         // DOM 元素
         const uploadZone = document.getElementById('uploadZone');
@@ -994,6 +997,7 @@
 
         // 语言显示名称映射
         const langDisplayName = {
+            'en': '英语',
             'en-US': '英语(美国)',
             'de-DE': '德语',
             'en-AU': '英语(澳大利亚)',
@@ -1026,7 +1030,22 @@
             
             selectedLang = null;
             
+            // 创建显示列表，将en相关语言合并为一个
+            const displayTags = [];
+            let hasEn = false;
+            
             Object.keys(langNotes).forEach(tag => {
+                if (enLangTags.includes(tag)) {
+                    if (!hasEn) {
+                        displayTags.push('en'); // 合并的英语标签
+                        hasEn = true;
+                    }
+                } else {
+                    displayTags.push(tag);
+                }
+            });
+            
+            displayTags.forEach(tag => {
                 const card = document.createElement('div');
                 card.className = 'lang-card';
                 card.innerHTML = `
@@ -1050,32 +1069,51 @@
                 }
             });
             
+            // 获取要复制的内容（en使用en-US的内容）
+            let contentToCopy = '';
+            let displayTag = tag;
+            
+            if (tag === 'en') {
+                contentToCopy = langNotes['en-US'] || '';
+                displayTag = 'en';
+            } else {
+                contentToCopy = langNotes[tag] || '';
+            }
+            
             // 显示预览
             const preview = document.getElementById('langSinglePreview');
             const previewTitle = document.getElementById('previewTitle');
             const previewContent = document.getElementById('previewContent');
             
-            previewTitle.textContent = `${tag} - ${langDisplayName[tag] || tag}`;
-            previewContent.textContent = langNotes[tag] || '';
+            previewTitle.textContent = `${displayTag} - ${langDisplayName[displayTag] || displayTag}`;
+            previewContent.textContent = contentToCopy;
             preview.classList.add('show');
             
             // 自动复制内容到剪贴板
-            if (langNotes[tag]) {
+            if (contentToCopy) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(langNotes[tag])
+                    navigator.clipboard.writeText(contentToCopy)
                         .then(() => showCopyToast())
-                        .catch(() => fallbackCopySingle(langNotes[tag]));
+                        .catch(() => fallbackCopySingle(contentToCopy));
                 } else {
-                    fallbackCopySingle(langNotes[tag]);
+                    fallbackCopySingle(contentToCopy);
                 }
             }
         }
 
         // 复制单语言内容
         document.getElementById('copySingleBtn').addEventListener('click', function() {
-            if (!selectedLang || !langNotes[selectedLang]) return;
+            if (!selectedLang) return;
             
-            const content = langNotes[selectedLang];
+            // 获取要复制的内容（en使用en-US的内容）
+            let content = '';
+            if (selectedLang === 'en') {
+                content = langNotes['en-US'] || '';
+            } else {
+                content = langNotes[selectedLang] || '';
+            }
+            
+            if (!content) return;
             
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content)
