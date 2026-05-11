@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplink 列表</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f2f7;
+            margin: 0;
+            padding: 16px;
+            color: #1c1c1e;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #000;
+        }
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .link-item {
+            display: block;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #007aff;
+            font-size: 17px;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: background-color 0.2s;
+            word-break: break-all;
+        }
+        .link-item:active {
+            background-color: #e5e5ea;
+        }
+        .link-url {
+            display: block;
+            font-size: 12px;
+            color: #8e8e93;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deeplink 测试列表</h1>
+    <div class="link-list">
+        <a href="https://www.klook.com/zh-CN/event/booking/details/?orderNo=807622169" class="link-item">
+            Event 订单详情页（likai***@gmail.com）
+            <span class="link-url">https://www.klook.com/zh-CN/event/booking/details/?orderNo=807622169</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/event/booking/details/?orderNo=807469653" class="link-item">
+            Event 订单详情页（Naver 账号）
+            <span class="link-url">https://www.klook.com/zh-CN/event/booking/details/?orderNo=807469653</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/event/booking/details/?orderNo=809451272" class="link-item">
+            Event 订单详情页（19129936251账号）
+            <span class="link-url">https://www.klook.com/zh-CN/event/booking/details/?orderNo=809451272</span>
+        </a>
+        <a href="https://click.klook.com/ls/click?upn=u001.QPstsPdrjwzo-2FzalvlwHURgTfdCmgFM69TgF1LjA-2FGmePhE7my0qBPKvzUkjdx-2B6G-2FoY50QZEfd0zwiu-2F5v3Xi8vGSZXnCpBnl9tB5AcyunJJRnH7mWdaANvQ-2BnqIMqJGo1KgaP6ShB9OKv2fhjkijsp6M8cjUcTEVf5Gq3eB1ZH0Ft1auJhjJs-2Blz5imvXzauVMwlW0qmQamxShXJXlvVtdvANiGZWwBEZCwh6xoDJnKPLJ3uKMddfJBFNubrgiZGjYUPi6QCljmEOKKVzf7S20M9eFPpP-2BWJ9iy8RLA-2FZVaw843PRZ8rbvIBYBH5-2Bx8-2FCrkQiRkjb5pdIUYXN18VDbaWI6iBaf0V6LkahUaPxiKP5k5v9EhMPJznzF2Pv-2BzZlse-2BqPoGZNTywIt-2FM4TZ6Z-2F8pgXXFc4igqjjgYYG71pho0RhofjQk06qIw-2BrrWKRdJYNtmxf4h8gERWODXnhcjJoMIHWTikk3vWWL3nCCDIcrBc0GYtIlVQyyC-2BGZbPrgh_u0I29OOI7ZfxlO4rh-2BAVjVYafybTZHg1AohaJvhgxncaNXH-2BZPOsC8O4xu7kenno-2BvQ85m-2Fvqjq9NK-2B1MPRcMXB90wOVlXoGvFBUTeiMA6QuJeW9bgF7Lmanb1zQ5w6GJqC1AvP4VuASxMIgNj6yMtcixAXMdIM6efVt3vpMcvlZdYTfZvc6ZRN1cnkIfVhPtF0p0TYwVjAOgMJrLr-2Fkgw-3D-3D" class="link-item">
+            Event 订单详情页（微信账号 jiarong 给的）
+            <span class="link-url">https://www.klook.com/zh-CN/event/booking/details/?orderNo=809451272</span>
+        </a>
+        <a href="https://click.klook.com/ls/click?upn=u001.QPstsPdrjwzo-2FzalvlwHUXh-2FHduqvda4buVNBGEL0nHEI9XfE30iVmdVnrnbqnj5rxpr8-2BAC1cz6MUZ29rVN0TVIiGu4FB7B7yc-2FlDd2nQjplqq7R4KEdsoL0Q0XgIzi4OJrK5kApPOHnAiBhpaVexlSs9RsDSr0vQ4WzX5kMockjarvEKvlCn6tWZGtLpf3zWXxyr2wr4juwWdGJyuOZ04bdzz95RmZbjFTvuXI1841dYK8dVyc4rWRtghm9a-2FzLjhMmzwE6C-2BfPifvqUgkkmYn-2BI7F8zNoQRuoNOLpkY4rsF7IUf0PWukC-2FNXm690vxDeqxI5IiK-2FkJtyn2oH6JjmAihwyFTyHZWpLZrmnbp697bOxIufIIhxpTX8pV1yQwPr5uT9fo8FivkO3B-2Bc-2BA-2F-2BsYJCxfywlU8vx8bExqHycLnfQ72qbU6N43JSsuxfMrL0-2BuxIVFUv-2FpKETbuPCwoMiN-2FR5xRer5YiSI9jTlho-3DI45G_u0I29OOI7ZfxlO4rh-2BAVjVYafybTZHg1AohaJvhgxnd5byk4IV3Nh8UkR0A8Fr1juwSOeEmw7Xe1TxgzFuv9a6H2uvpHXgCwSUyC2oABz6UsxCoS-2BBvGM-2BL26gV6ORfOKNNO9AZQeQ157UpSn-2BrXGjxF67Rzz0cqHzMeGy8by14rPoDj7O2owCf8dr8x5-2F7oqmhO0xdmK0HS2vVzP-2BkYwA-3D-3D" class="link-item">
+            Event 订单详情页（asset-test@klook.com）
+            <span class="link-url">https://click.klook.com/ls/click?upn=</span>
+        </a>
+        <a href="https://www.klook.com/v2/usrcsrv/publish/email_track/deeplink_redirect/695fb81e338ddb01e9bbb5d2?component_spm=email-text-button&component_text=%E9%AA%8C%E8%AF%81&redirect_url=https%3A%2F%2Fwww.klook.com%2Fzh-CN%2Femail-link-login%3Frid%3D8279bb65a287496c50a4e70e5503a12e%26token%3D969ddf1b7723450672d85f99c0f95707%26from_source%3Demail%26from_medium%3Dsystem_email%26from_campaign%3Dverification-otp-and-link%26c%3Dsystem_email%26pid%3Demail" class="link-item">
+            Email+link 登录（asset-test@klook.com）
+            <span class="link-url">https://www.stage.klook.io/v2/usrcsrv/publish/email_track/deeplink_redirect</span>
+        </a>
+        <a href="https://click.klook.com/ls/click?upn=u001.QPstsPdrjwzo-2FzalvlwHUXh-2FHduqvda4buVNBGEL0nHEI9XfE30iVmdVnrnbqnj5rxpr8-2BAC1cz6MUZ29rVN0TVIiGu4FB7B7yc-2FlDd2nQh6urRUrkOvrMp0ef1h3BpsjKGEzas3bzrJ-2BKqTk2twAcvwYDfBWJv3VdMMS2HPHxbLTAzHmfkVyXhgbCZJbY8RybHCBhhc6jnH35JSp7gMwwUIpiMrAWlMpojZm15vD6XiedJd6MCdaUsNIfWE6F3XmdKePtzsgILehUqQSrJDcsbddoBS8F8WBh8GV5pUN-2FqLfyqRbRp4mwaCG32jiafAhhl3NhZXr-2BEUFfzKlNbDRaov8ttnzNkq4vwSyB-2BED7wPI1LjOeP8JxdI2w-2B4vKLUh19zy00Lx4kgUgHJizKfKw12rMRxFvwTww0JcboUq7J0Jr2INjelyE6WkuZC4tHdbFbp9ZZF0RTQXjrkVWNtSZlkrDRyty5SmNmvf83lXBZ8-2BuhAA5Bt3fv49Se8IGgiqp6TvqBkYvSt47QUAExHI0BDpbIl4WkvTD9sSomrFlzDwRPibugO36K-2FLNBZlZuY4l-2FbzAC1yVIgql2Jcs24jqMIDUT2ouicse9THjmaQejy0OzIPudqRUavxYuDwkll-2FGN3ti6SYUapZjn0D0-2BUVtRUgFktQCEQg2DyXyz1pe5L78xfqcYvjJMAEF1iIJK1VWLyzwH3O8tLJjv6boH8FUcoVTChzFq5cCQQHNXlmqY-3DkZFg_u0I29OOI7ZfxlO4rh-2BAVjVYafybTZHg1AohaJvhgxnfJTXhNtJ24RGVOgJrITKp3uSXT6qWVnZhJHQGsY3gnhHIYw2I7h541YgFlTBYsqhe1hTAZ5kefJvh-2F7ei6RlFvtUYu9d49iLsqEe0KTNPQtI6nYYJZrnAEl8I7QGW639P5OQsmhCdvHjpr1YuAviwjKSEeEncmmxSXXOx6mhXObQ-3D-3D" class="link-item">
+            重置密码
+            <span class="link-url">https://click.klook.com/ls/click</span>
+        </a>
+        <a href="https://www.klook.com/reset-pwd?token=b10f428cb89e46974adee0648bf727c2&from_source=email&from_medium=system_email&from_campaign=account-security-prompt&af_dp=klook%3A%2F%2Finvite&af_r=https://www.klook.com/en-US/invite/&af_web_dp=https://www.klook.com/en-US/invite/&c=system_email&pid=email" class="link-item">
+            重置密码
+            <span class="link-url">https://www.klook.com/reset-pwd</span>
+        </a>
+        <a href="http://t52.klook.io/zh-CN/china-train-ticket" class="link-item">
+            中铁
+            <span class="link-url">http://t52.klook.io/zh-CN/china-train-ticket</span>
+        </a>
+        <a href="https://www.klook.com/wifi-sim-card/" class="link-item">
+            wifi-kong
+            <span class="link-url">https://www.klook.com/wifi-sim-card/</span>
+        </a>
+        <a href="https://www.klook.com/wifi-sim-card" class="link-item">
+            wifi-kong2
+            <span class="link-url">https://www.klook.com/wifi-sim-card</span>
+        </a>
+        <a href="https://www.klook.com/wifi-sim-card?city_id=2&amp;region=28-Hong%20Kong" class="link-item">
+            wifi
+            <span class="link-url">https://www.klook.com/wifi-sim-card?city_id=2&amp;region=28-Hong%20Kong</span>
+        </a>
+        <a href="https://www.klook.com/city/2-hong-kong/?template_ids=1" class="link-item">
+            TTD-2
+            <span class="link-url">https://www.klook.com/city/2-hong-kong/?template_ids=1</span>
+        </a>
+        <a href="tel:13428720102" class="link-item">
+            电话13428720102
+            <span class="link-url">tel:13428720102</span>
+        </a>
+        <a href="https://www.klook.com/wifi-sim-card%E3%80%81city_id=2&amp;region=28-Hong%20" class="link-item">
+            wifi
+            <span class="link-url">https://www.klook.com/wifi-sim-card%E3%80%81city_id=2&amp;region=28-Hong%20</span>
+        </a>
+        <a href="mailto:heweiyun@klook.com" class="link-item">
+            邮箱heweiyun@klook.com
+            <span class="link-url">mailto:heweiyun@klook.com</span>
+        </a>
+        <a href="https://www.klook.com/zh-HK/europe-rail/" class="link-item">
+            欧铁
+            <span class="link-url">https://www.klook.com/zh-HK/europe-rail/</span>
+        </a>
+        <a href="https://www.klook.com/my_ysim" class="link-item">
+            ysim
+            <span class="link-url">https://www.klook.com/my_ysim</span>
+        </a>
+        <a href="https://www.klook.com/giftcard/" class="link-item">
+            礼品卡
+            <span class="link-url">https://www.klook.com/giftcard/</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong?aid=1213" class="link-item">
+            aid=1213
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong?aid=1213</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong?aid=5" class="link-item">
+            aid=5
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong?aid=5</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong?aid=129b1640351944eb" class="link-item">
+            aid=129b1640351944eb
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong?aid=129b1640351944eb</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong?aid=api%7C6%7Cjimmymu" class="link-item">
+            aid=api|6|jimmym
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong?aid=api%7C6%7Cjimmymu</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong/" class="link-item">
+            正常活动
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong/</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/activity/87-sky100-hong-kong/" class="link-item">
+            带语言的正常活动
+            <span class="link-url">https://www.klook.com/zh-TW/activity/87-sky100-hong-kong/</span>
+        </a>
+        <a href="https://www.klook.com/heweiyun/activity/87-sky100-hong-kong/" class="link-item">
+            不带语言的不正常的活动
+            <span class="link-url">https://www.klook.com/heweiyun/activity/87-sky100-hong-kong/</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/heweiyun/activity/87-sky100-hong-kong/" class="link-item">
+            带语言的不正常的活动
+            <span class="link-url">https://www.klook.com/zh-TW/heweiyun/activity/87-sky100-hong-kong/</span>
+        </a>
+        <a href="klook://webview?url=https%3a%2f%2fwww.clubsim.com.hk%2fclsweb%2fklookpromote%3flang%3dzh" class="link-item">
+            jaychou
+            <span class="link-url">klook://webview?url=https%3a%2f%2fwww.clubsim.com.hk%2fclsweb%2fklookpromote%3flang%3dzh</span>
+        </a>
+        <a href="klook://invite" class="link-item">
+            klook invite
+            <span class="link-url">klook://invite</span>
+        </a>
+        <a href="https://www.klook.com/invite" class="link-item">
+            http invite
+            <span class="link-url">https://www.klook.com/invite</span>
+        </a>
+        <a href="https://klook.onelink.me/1436524434?pid=aaa&amp;af_dp=klook%3A%2F%2Fwebview%3Furl%3Dhttps%253a%252f%252fwww.klook.com%252fpromo%252fhkglobalwifi&amp;af_web_dp=https%3A%2F%2Fwww.klook.com%2F" class="link-item">
+            compain page
+            <span class="link-url">https://klook.onelink.me/1436524434?pid=aaa&amp;af_dp=klook%3A%2F%2Fwebview%3Furl%3Dhttps%253a%252f%252fwww.klook.com%252fpromo%252fhkglobalwifi&amp;af_web_dp=https%3A%2F%2Fwww.klook.com%2F</span>
+        </a>
+        <a href="https://www.klook.com/" class="link-item">
+            https://www.klook.com
+            <span class="link-url">https://www.klook.com/</span>
+        </a>
+        <a href="https://www.klook.com/" class="link-item">
+            https://www.klook.com/
+            <span class="link-url">https://www.klook.com/</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/pay?settlement_type=1&amp;shoppingcart_id=12155578" class="link-item">
+            支付页
+            <span class="link-url">https://www.klook.com/zh-CN/pay?settlement_type=1&amp;shoppingcart_id=12155578</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/web3/ask_klook_redirect" class="link-item">
+            https://www.klook.com/zh-CN/web3/ask_klook_redirect
+            <span class="link-url">https://www.klook.com/zh-CN/web3/ask_klook_redirect</span>
+        </a>
+        <a href="klook://ask_klook_redirect" class="link-item">
+            klook://ask_klook_redirect
+            <span class="link-url">klook://ask_klook_redirect</span>
+        </a>
+        <a href="https://www.facebook.com/klookhk/posts/2150568548498201?business_id=1945799792311978" class="link-item">
+            facebook deeplink
+            <span class="link-url">https://www.facebook.com/klookhk/posts/2150568548498201?business_id=1945799792311978</span>
+        </a>
+        <a href="https://affiliate.klook.com/jump/zh-CN/activity/1684-/?adid=67981&amp;af_wid=5796" class="link-item">
+            affiliate link
+            <span class="link-url">https://affiliate.klook.com/jump/zh-CN/activity/1684-/?adid=67981&amp;af_wid=5796</span>
+        </a>
+        <a href="klook://shoppingcart" class="link-item">
+            klook shoppingcart
+            <span class="link-url">klook://shoppingcart</span>
+        </a>
+        <a href="klook://webview?url=https://www.baidu.com&amp;need_app_login=true" class="link-item">
+            webview
+            <span class="link-url">klook://webview?url=https://www.baidu.com&amp;need_app_login=true</span>
+        </a>
+        <a href="klook://voucher?token=d88c6699-cdec-45f7-538d-f63379b660eb&amp;time=1500284859087" class="link-item">
+            klook voucher
+            <span class="link-url">klook://voucher?token=d88c6699-cdec-45f7-538d-f63379b660eb&amp;time=1500284859087</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/voucher/KLK9023022057?token=d88c6699-cdec-45f7-538d-f63379b660eb&amp;" class="link-item">
+            http voucher
+            <span class="link-url">https://www.klook.com/zh-TW/voucher/KLK9023022057?token=d88c6699-cdec-45f7-538d-f63379b660eb&amp;</span>
+        </a>
+        <a href="klook://bookings" class="link-item">
+            klook bookings
+            <span class="link-url">klook://bookings</span>
+        </a>
+        <a href="klook://city/2?id=2" class="link-item">
+            klook city
+            <span class="link-url">klook://city/2?id=2</span>
+        </a>
+        <a href="klook://category?id=1&amp;city=2" class="link-item">
+            klook category
+            <span class="link-url">klook://category?id=1&amp;city=2</span>
+        </a>
+        <a href="klook://theme?id=1&amp;city=" class="link-item">
+            klook theme
+            <span class="link-url">klook://theme?id=1&amp;city=</span>
+        </a>
+        <a href="klook://activity/2?id=2" class="link-item">
+            klook activity
+            <span class="link-url">klook://activity/2?id=2</span>
+        </a>
+        <a href="https://www.klook.com/index" class="link-item">
+            http home
+            <span class="link-url">https://www.klook.com/index</span>
+        </a>
+        <a href="klook://home" class="link-item">
+            klook home
+            <span class="link-url">klook://home</span>
+        </a>
+        <a href="https://www.klook.com/shoppingcart" class="link-item">
+            shoppingcart
+            <span class="link-url">https://www.klook.com/shoppingcart</span>
+        </a>
+        <a href="https://www.klook.com/bookings" class="link-item">
+            booking
+            <span class="link-url">https://www.klook.com/bookings</span>
+        </a>
+        <a href="https://www.klook.com/city/2-hong-kong/" class="link-item">
+            city
+            <span class="link-url">https://www.klook.com/city/2-hong-kong/</span>
+        </a>
+        <a href="https://www.klook.com/city/2-hong-kong/3-cate/" class="link-item">
+            category
+            <span class="link-url">https://www.klook.com/city/2-hong-kong/3-cate/</span>
+        </a>
+        <a href="https://www.klook.com/activity/87-sky100-hong-kong/" class="link-item">
+            activity
+            <span class="link-url">https://www.klook.com/activity/87-sky100-hong-kong/</span>
+        </a>
+        <a href="https://www.klook.com/city/19/560/category" class="link-item">
+            theme
+            <span class="link-url">https://www.klook.com/city/19/560/category</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/theme/129" class="link-item">
+            不属于城市的主题
+            <span class="link-url">https://www.klook.com/zh-TW/theme/129</span>
+        </a>
+        <a href="https://www.klook.com/asksk/19/560/category" class="link-item">
+            异常测试一
+            <span class="link-url">https://www.klook.com/asksk/19/560/category</span>
+        </a>
+        <a href="https://www.baidu.com/" class="link-item">
+            异常测试二
+            <span class="link-url">https://www.baidu.com/</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/faq" class="link-item">
+            客路超链接异常测试二
+            <span class="link-url">https://www.klook.com/zh-TW/faq</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/coupons/" class="link-item">
+            coupons
+            <span class="link-url">https://www.klook.com/zh-CN/coupons/</span>
+        </a>
+        <a href="https://www.klook.com/destination_list" class="link-item">
+            首页目的地列表
+            <span class="link-url">https://www.klook.com/destination_list</span>
+        </a>
+        <a href="https://www.klook.com/destination_list?is_independent=true" class="link-item">
+            独立目的地列表
+            <span class="link-url">https://www.klook.com/destination_list?is_independent=true</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/voucher/KLK8063084520" class="link-item">
+            voucher
+            <span class="link-url">https://www.klook.com/zh-TW/voucher/KLK8063084520</span>
+        </a>
+        <a href="https://www.klook.com/zh-TW/voucher/KLK8063084520&amp;token=alalalalalalalal" class="link-item">
+            voucher token错误信息
+            <span class="link-url">https://www.klook.com/zh-TW/voucher/KLK8063084520&amp;token=alalalalalalalal</span>
+        </a>
+        <a href="https://www.klook.com/voucher/KLK2328721521?token=0eb69780-7bb1-449d-7901-c573fcf069f4&amp;lang=en_US" class="link-item">
+            voucher token错误信息
+            <span class="link-url">https://www.klook.com/voucher/KLK2328721521?token=0eb69780-7bb1-449d-7901-c573fcf069f4&amp;lang=en_US</span>
+        </a>
+        <a href="https://www.klook.com/activity/39-hong-kong-disneyland-hong-kong/?source=10" class="link-item">
+            带coupon的链接
+            <span class="link-url">https://www.klook.com/activity/39-hong-kong-disneyland-hong-kong/?source=10</span>
+        </a>
+        <a href="https://klook.onelink.me/1436524434?pid=aa&amp;c=bb&amp;af_dp=https%3A%2F%2Fwww.klook.com%2Factivity%2F87-sky100-hong-kong%2F&amp;af_web_dp=https%3A%2F%2Fwww.klook.com%2Factivity%2F87-sky100-hong-kong%2F" class="link-item">
+            deeplink
+            <span class="link-url">https://klook.onelink.me/1436524434?pid=aa&amp;c=bb&amp;af_dp=https%3A%2F%2Fwww.klook.com%2Factivity%2F87-sky100-hong-kong%2F&amp;af_web_dp=https%3A%2F%2Fwww.klook.com%2Factivity%2F87-sky100-hong-kong%2F</span>
+        </a>
+        <a href="klook://webview?url=https%3A%2F%2Fwww.klook.com%2Fzh-HK%2Fpromo%2Fhkeaster2019%26utm_medium%3Dcpc%26utm_source%3Dgoogle%26utm_campaign%3Dhk_social_ps_sakura-2019_mar-2019_reach" class="link-item">
+            测试不通的链接
+            <span class="link-url">klook://webview?url=https%3A%2F%2Fwww.klook.com%2Fzh-HK%2Fpromo%2Fhkeaster2019%26utm_medium%3Dcpc%26utm_source%3Dgoogle%26utm_campaign%3Dhk_social_ps_sakura-2019_mar-2019_reach</span>
+        </a>
+        <a href="klook://home?utm_medium%3Dcpc%26utm_source%3Dgoogle%26utm_campaign%3Dhk_social_ps_sakura-2019_mar-2019_reach" class="link-item">
+            测试不通的链接2
+            <span class="link-url">klook://home?utm_medium%3Dcpc%26utm_source%3Dgoogle%26utm_campaign%3Dhk_social_ps_sakura-2019_mar-2019_reach</span>
+        </a>
+        <a href="https://www.klook.com/zh-HK/hotels?thirdparty=1" class="link-item">
+            首页酒店
+            <span class="link-url">https://www.klook.com/zh-HK/hotels?thirdparty=1</span>
+        </a>
+        <a href="https://www.klook.com/zh-HK/city/3-macau/hotels/" class="link-item">
+            城市页酒店
+            <span class="link-url">https://www.klook.com/zh-HK/city/3-macau/hotels/</span>
+        </a>
+        <a href="https://www.klook.com/zh-HK/coureg/12-japan/hotels/?container_type=country&amp;revamp_country_id=12&amp;revamp_index=8&amp;revamp_x=-315.429&amp;fixed_revamp_x=0&amp;revamp_country_name=%E6%97%A5%E6%9C%AC" class="link-item">
+            日本酒店
+            <span class="link-url">https://www.klook.com/zh-HK/coureg/12-japan/hotels/?container_type=country&amp;revamp_country_id=12&amp;revamp_index=8&amp;revamp_x=-315.429&amp;fixed_revamp_x=0&amp;revamp_country_name=%E6%97%A5%E6%9C%AC</span>
+        </a>
+        <a href="klook://city?id=393" class="link-item">
+            台铁
+            <span class="link-url">klook://city?id=393</span>
+        </a>
+        <a href="klook://city?id=100" class="link-item">
+            JRpass
+            <span class="link-url">klook://city?id=100</span>
+        </a>
+        <a href="klook://china-train-ticket" class="link-item">
+            中铁
+            <span class="link-url">klook://china-train-ticket</span>
+        </a>
+        <a href="klook://europe-rail" class="link-item">
+            欧铁
+            <span class="link-url">klook://europe-rail</span>
+        </a>
+        <a href="klook://my_ysim" class="link-item">
+            Ysmin
+            <span class="link-url">klook://my_ysim</span>
+        </a>
+        <a href="klook://wifi-sim-card" class="link-item">
+            wifi-simcard
+            <span class="link-url">klook://wifi-sim-card</span>
+        </a>
+        <a href="klook://search?template_ids=1" class="link-item">
+            景点门票&amp;表演
+            <span class="link-url">klook://search?template_ids=1</span>
+        </a>
+        <a href="klook://search?template_ids=2" class="link-item">
+            一日游&amp;小团游
+            <span class="link-url">klook://search?template_ids=2</span>
+        </a>
+        <a href="klook://search?template_ids=3" class="link-item">
+            特色活动&amp;体验
+            <span class="link-url">klook://search?template_ids=3</span>
+        </a>
+        <a href="klook://search?template_ids=4" class="link-item">
+            地道美食
+            <span class="link-url">klook://search?template_ids=4</span>
+        </a>
+        <a href="klook://search?template_ids=5" class="link-item">
+            当地交通&amp;旅游服务
+            <span class="link-url">klook://search?template_ids=5</span>
+        </a>
+        <a href="klook://thrid_platform_payment_completed" class="link-item">
+            momo支付唤起二
+            <span class="link-url">klook://thrid_platform_payment_completed</span>
+        </a>
+        <a href="klook://payment_callback/ideal_adyen-0031?invoice_guid=dfd610cf-2cdc-4b30-69bf-33b7a364e0c3&amp;invoice_submission_guid=b10250a8-45b2-413d-4614-020076fb52e2&amp;order_no=1061282183&amp;platform=ios" class="link-item">
+            ideal 唤起收银台
+            <span class="link-url">klook://payment_callback/ideal_adyen-0031?invoice_guid=dfd610cf-2cdc-4b30-69bf-33b7a364e0c3&amp;invoice_submission_guid=b10250a8-45b2-413d-4614-020076fb52e2&amp;order_no=1061282183&amp;platform=ios</span>
+        </a>
+        <a href="https://www.klook.com/en-PH/web3/payment/wallet_antfin?payment_guid=95eb33c0-bb67-4f31-64d8-c6bc81176049&amp;trade_no=3485012718&amp;trade_status=success&amp;authCode=ad280ff4-202e-33a6-99a1-583748192971&amp;authState=1061291100-d17a6f04-1aced69a" class="link-item">
+            蚂蚁金服唤起 payment 支付页（产线环境）
+            <span class="link-url">https://www.klook.com/en-PH/web3/payment/wallet_antfin?payment_guid=95eb33c0-bb67-4f31-64d8-c6bc81176049&amp;trade_no=3485012718&amp;trade_status=success&amp;authCode=ad280ff4-202e-33a6-99a1-583748192971&amp;authState=1061291100-d17a6f04-1aced69a</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/web3/order-payment/wallet_antfin?payment_guid=95eb33c0-bb67-4f31-64d8-c6bc81176049&amp;trade_no=3485012718&amp;trade_status=success&amp;authCode=ad280ff4-202e-33a6-99a1-583748192971&amp;authState=1061291100-d17a6f04-1aced69a" class="link-item">
+            蚂蚁金服唤起 order-payment 支付页（产线环境）
+            <span class="link-url">https://www.klook.com/zh-CN/web3/order-payment/wallet_antfin?payment_guid=95eb33c0-bb67-4f31-64d8-c6bc81176049&amp;trade_no=3485012718&amp;trade_status=success&amp;authCode=ad280ff4-202e-33a6-99a1-583748192971&amp;authState=1061291100-d17a6f04-1aced69a</span>
+        </a>
+        <a href="http://t217.test.klook.io/zh-CN/web3/payment/wallet_antfin?payment_guid=0df39d3e-9484-4fbc-6eaf-e2316a3037da&platform=android&trade_no=1061188015&trade_status=success&authCode=281004139549345689135681589&authState=1061083503-1595493435032851236" class="link-item">
+            蚂蚁金服唤起支付页（217 环境）
+            <span class="link-url">http://t217.test.klook.io/zh-CN/web3/payment/wallet_antfin?payment_guid=0df39d3e-9484-4fbc-6eaf-e2316a3037da&platform=android&trade_no=1061188015&trade_status=success&authCode=281004139549345689135681589&authState=1061083503-1595493435032851236</span>
+        </a>
+        <a href="https://t217.test.klook.io/zh-TW/web3/order-payment/linepay?invoice_guid=6453b94b-1ddc-4c51-7ae5-f1b590f9b080&invoice_submission_guid=02d210b5-bee2-4164-70e4-a411bb2c2429&order_no=1713945489&platform=android" class="link-item">
+            LinePay唤起支付页（包含多语言）
+            <span class="link-url">https://t217.test.klook.io/zh-TW/web3/order-payment/linepay?invoice_guid=6453b94b-1ddc-4c51-7ae5-f1b590f9b080&invoice_submission_guid=02d210b5-bee2-4164-70e4-a411bb2c2429&order_no=1713945489&platform=android</span>
+        </a>
+        <a href="https://t217.test.klook.io/web3/order-payment/linepay?invoice_guid=6453b94b-1ddc-4c51-7ae5-f1b590f9b080&invoice_submission_guid=02d210b5-bee2-4164-70e4-a411bb2c2429&order_no=1713945489&platform=android" class="link-item">
+            LinePay唤起支付页（不包含多语言）
+            <span class="link-url">https://t217.test.klook.io/web3/order-payment/linepay?invoice_guid=6453b94b-1ddc-4c51-7ae5-f1b590f9b080&invoice_submission_guid=02d210b5-bee2-4164-70e4-a411bb2c2429&order_no=1713945489&platform=android</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/web3/order-payment/kakaopay_antfin?invoice_guid=275139a0-0376-4a86-6713-0d76b6b6a2ca&invoice_submission_guid=4f245990-25b2-420f-6a95-8e169454ba61&order_no=3508038743&platform=android&scopes=AGREEMENT_PAY&state=3508038743-70b66cc0-d55a9cc0&terminalType=APP&signature=YnBcf/C9oJnEKcoCUlUGZtfb" class="link-item">
+            kakaopay_antfin（包含多语言）
+            <span class="link-url">https://www.klook.com/zh-CN/web3/order-payment/kakaopay_antfin?invoice_guid=275139a0-0376-4a86-6713-0d76b6b6a2ca&invoice_submission_guid=4f245990-25b2-420f-6a95-8e169454ba61&order_no=3508038743&platform=android&scopes=AGREEMENT_PAY&state=3508038743-70b66cc0-d55a9cc0&terminalType=APP&signature=YnBcf/C9oJnEKcoCUlUGZtfb</span>
+        </a>
+        <a href="https://www.klook.com/web3/order-payment/kakaopay_antfin?invoice_guid=275139a0-0376-4a86-6713-0d76b6b6a2ca&invoice_submission_guid=4f245990-25b2-420f-6a95-8e169454ba61&order_no=3508038743&platform=android&scopes=AGREEMENT_PAY&state=3508038743-70b66cc0-d55a9cc0&terminalType=APP&signature=YnBcf/C9oJnEKcoCUlUGZtfb" class="link-item">
+            kakaopay_antfin（不包含多语言）
+            <span class="link-url">https://www.klook.com/web3/order-payment/kakaopay_antfin?invoice_guid=275139a0-0376-4a86-6713-0d76b6b6a2ca&invoice_submission_guid=4f245990-25b2-420f-6a95-8e169454ba61&order_no=3508038743&platform=android&scopes=AGREEMENT_PAY&state=3508038743-70b66cc0-d55a9cc0&terminalType=APP&signature=YnBcf/C9oJnEKcoCUlUGZtfb</span>
+        </a>
+        <a href="https://www.klook.com/zh-CN/web3/order-payment/tngcashier?invoice_guid=b1f26251-9d0a-4c7d-7460-39fd401d924f\u0026invoice_submission_guid=901dcfbf-de34-411d-49ca-dcc228bdb044\u0026order_no=3521845685\u0026platform=android" class="link-item">
+            TNG（产线测试）
+            <span class="link-url">https://www.klook.com/zh-CN/web3/order-payment/tngcashier?invoice_guid=b1f26251-9d0a-4c7d-7460-39fd401d924f\u0026invoice_submission_guid=901dcfbf-de34-411d-49ca-dcc228bdb044\u0026order_no=3521845685\u0026platform=android</span>
+        </a>
+        <a href="klook://payment_callback/payanyone/eyJpbnZvaWNlX2d1aWQiOiI4NDlkMzJmNy0wNzRjLTQyNzctNDcwYS05MzI5ODM1OWUzNGUiLCJpbnZvaWNlX3N1Ym1pc3Npb25fZ3VpZCI6ImU3MDdjYzY4LTVhYjctNGUwNS03OGJmLTZmZDBlMjc0ZDU0NyIsIm9yZGVyX25vIjoiMTc5MjEyNTYzNSIsInBsYXRmb3JtIjoiYW5kcm9pZCJ9?version\u003d3\u0026transactionID\u003dQR1792125635681e66d145\u0026statusCode\u003d1000\u0026statusMessage\u003dTransaction%20successful" class="link-item">
+            Payanyone 测试
+            <span class="link-url">klook://payment_callback/payanyone/eyJpbnZvaWNlX2d1aWQiOiI4NDlkMzJmNy0wNzRjLTQyNzctNDcwYS05MzI5ODM1OWUzNGUiLCJpbnZvaWNlX3N1Ym1pc3Npb25fZ3VpZCI6ImU3MDdjYzY4LTVhYjctNGUwNS03OGJmLTZmZDBlMjc0ZDU0NyIsIm9yZGVyX25vIjoiMTc5MjEyNTYzNSIsInBsYXRmb3JtIjoiYW5kcm9pZCJ9?version\u003d3\u0026transactionID\u003dQR1792125635681e66d145\u0026statusCode\u003d1000\u0026statusMessage\u003dTransaction%20successful</span>
+        </a>
+        <a href="https://www.klook.com/en-GB/web3/order-payment/culturepass?invoice_guid=0e4f74ea-539a-4cdc-57d6-1febc6284efe&invoice_submission_guid=e43405c3-8d9b-4d73-5e52-eb7ebdfb7054&order_no=2692317710&platform=android&payload=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1wYWlnbiI6Im1jY3ktY3VsdHVyZS1wYXNzLXByZCIsImNhcnQiOnsiYWRkaXRpb25hbEZlZXNDZW50cyI6MCwiY2FydEV4cGlyeSI6IjIwMjUtMDgtMjBUMDU6Mzg6MzBaIiwiY2FydEl0ZW1zIjpbeyJhZGRpdGlvbmFsRmVlc0NlbnRzIjowLCJhbW91bnRDZW50cyI6NTAwLCJhbW91bnREaXNwbGF5IjoiIiwiZGVzY3JpcHRpb24iOiI1IMOXIFtUZXN0XS1FdmVudG5hbWUtUGVyc29uIGZvciBbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbUVuZERhdGUiOiIyMDI1LTA5LTAxVDAyOjAwOjAwKzA4OjAwIiwiaXRlbUlkIjoiNTc1MTg2IiwiaXRlbU5hbWUiOiJbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbVN0YXJ0RGF0ZSI6IjIwMjUtMDktMDFUMDA6MDA6MDArMDg6MDAiLCJpdGVtVHlwZSI6IlBlcnNvbiIsIm1ldGFkYXRhIjp7fSwicHJvdmlkZXJOYW1lIjoia2xvb2siLCJxdWFudGl0eSI6NX1dLCJkaXNjb3VudENlbnRzIjowLCJtZXRhZGF0YSI6eyJ1c2VyRGVmaW5lZDEiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sInBhcnRuZXJGYWlsdXJlUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJwYXJ0bmVyUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJ0b3RhbEFtb3VudENlbnRzIjo1MDAsInRyYW5zYWN0aW9uSWQiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sImV4cCI6MTc1NTY2MjI4OSwiaWF0IjoxNzU1NjYxMzg5LCJpc3MiOiJodHRwczovL3BheXdpdGgud2FsbGV0Lmdvdi5zZyIsIm5iZiI6MTc1NTY2MTM4OSwibm9uY2UiOiI0ZTQ4Y2I0NTcxMWYtZDVmNi1lNTE0LTAzZDUtMGU4NTMzYmYiLCJyZXN1bHQiOnsic3VjY2Vzc2Z1bFRyYW5zYWN0aW9uIjp7ImdvdndhbGxldFRyYW5zYWN0aW9uSWQiOiI4MzJmMzJmZC1iYjc4LTQzNzgtYTVjZi1mODA1YThjOGJkOWEiLCJwYXltZW50Ijp7ImNyZWRpdHMiOnsiYW1vdW50Q2VudHMiOjQwMCwibmFtZSI6IlNHIEN1bHR1cmUgUGFzcyBjcmVkaXRzIn0sIm91dE9mUG9ja2V0Ijp7ImFtb3VudENlbnRzIjoxMDAsIm1ldGhvZCI6IlBheU5vdyJ9LCJ0b3RhbEFtb3VudENlbnRzIjo1MDB9LCJ1bmlxdWVVc2VySWQiOiJERjcwRkRDQkRGNTlEQTU4MDZBMDYxRkQ0RUY5NkMxQkNENzM2RkJFREM2MUQ0NDEzRDZBRTY3MkJCN0Y5M0E1In19fQ.OJE_Umj7-My-uhvARXdB1hQhGa_gdV18x-SC1Ux8cgjysI_iMkkn2mUE5Wnjy-x-qeGGow_wZu---beADgHMBA" class="link-item">
+            SG Culture Pass
+            <span class="link-url">https://www.klook.com/en-GB/web3/order-payment/culturepass?invoice_guid=0e4f74ea-539a-4cdc-57d6-1febc6284efe&invoice_submission_guid=e43405c3-8d9b-4d73-5e52-eb7ebdfb7054&order_no=2692317710&platform=android&payload=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1wYWlnbiI6Im1jY3ktY3VsdHVyZS1wYXNzLXByZCIsImNhcnQiOnsiYWRkaXRpb25hbEZlZXNDZW50cyI6MCwiY2FydEV4cGlyeSI6IjIwMjUtMDgtMjBUMDU6Mzg6MzBaIiwiY2FydEl0ZW1zIjpbeyJhZGRpdGlvbmFsRmVlc0NlbnRzIjowLCJhbW91bnRDZW50cyI6NTAwLCJhbW91bnREaXNwbGF5IjoiIiwiZGVzY3JpcHRpb24iOiI1IMOXIFtUZXN0XS1FdmVudG5hbWUtUGVyc29uIGZvciBbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbUVuZERhdGUiOiIyMDI1LTA5LTAxVDAyOjAwOjAwKzA4OjAwIiwiaXRlbUlkIjoiNTc1MTg2IiwiaXRlbU5hbWUiOiJbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbVN0YXJ0RGF0ZSI6IjIwMjUtMDktMDFUMDA6MDA6MDArMDg6MDAiLCJpdGVtVHlwZSI6IlBlcnNvbiIsIm1ldGFkYXRhIjp7fSwicHJvdmlkZXJOYW1lIjoia2xvb2siLCJxdWFudGl0eSI6NX1dLCJkaXNjb3VudENlbnRzIjowLCJtZXRhZGF0YSI6eyJ1c2VyRGVmaW5lZDEiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sInBhcnRuZXJGYWlsdXJlUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJwYXJ0bmVyUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJ0b3RhbEFtb3VudENlbnRzIjo1MDAsInRyYW5zYWN0aW9uSWQiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sImV4cCI6MTc1NTY2MjI4OSwiaWF0IjoxNzU1NjYxMzg5LCJpc3MiOiJodHRwczovL3BheXdpdGgud2FsbGV0Lmdvdi5zZyIsIm5iZiI6MTc1NTY2MTM4OSwibm9uY2UiOiI0ZTQ4Y2I0NTcxMWYtZDVmNi1lNTE0LTAzZDUtMGU4NTMzYmYiLCJyZXN1bHQiOnsic3VjY2Vzc2Z1bFRyYW5zYWN0aW9uIjp7ImdvdndhbGxldFRyYW5zYWN0aW9uSWQiOiI4MzJmMzJmZC1iYjc4LTQzNzgtYTVjZi1mODA1YThjOGJkOWEiLCJwYXltZW50Ijp7ImNyZWRpdHMiOnsiYW1vdW50Q2VudHMiOjQwMCwibmFtZSI6IlNHIEN1bHR1cmUgUGFzcyBjcmVkaXRzIn0sIm91dE9mUG9ja2V0Ijp7ImFtb3VudENlbnRzIjoxMDAsIm1ldGhvZCI6IlBheU5vdyJ9LCJ0b3RhbEFtb3VudENlbnRzIjo1MDB9LCJ1bmlxdWVVc2VySWQiOiJERjcwRkRDQkRGNTlEQTU4MDZBMDYxRkQ0RUY5NkMxQkNENzM2RkJFREM2MUQ0NDEzRDZBRTY3MkJCN0Y5M0E1In19fQ.OJE_Umj7-My-uhvARXdB1hQhGa_gdV18x-SC1Ux8cgjysI_iMkkn2mUE5Wnjy-x-qeGGow_wZu---beADgHMBA</span>
+        </a>
+        <a href="klook://payment_callback/culturepass?invoice_guid=0e4f74ea-539a-4cdc-57d6-1febc6284efe&invoice_submission_guid=e43405c3-8d9b-4d73-5e52-eb7ebdfb7054&order_no=2692317710&platform=android&payload=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1wYWlnbiI6Im1jY3ktY3VsdHVyZS1wYXNzLXByZCIsImNhcnQiOnsiYWRkaXRpb25hbEZlZXNDZW50cyI6MCwiY2FydEV4cGlyeSI6IjIwMjUtMDgtMjBUMDU6Mzg6MzBaIiwiY2FydEl0ZW1zIjpbeyJhZGRpdGlvbmFsRmVlc0NlbnRzIjowLCJhbW91bnRDZW50cyI6NTAwLCJhbW91bnREaXNwbGF5IjoiIiwiZGVzY3JpcHRpb24iOiI1IMOXIFtUZXN0XS1FdmVudG5hbWUtUGVyc29uIGZvciBbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbUVuZERhdGUiOiIyMDI1LTA5LTAxVDAyOjAwOjAwKzA4OjAwIiwiaXRlbUlkIjoiNTc1MTg2IiwiaXRlbU5hbWUiOiJbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbVN0YXJ0RGF0ZSI6IjIwMjUtMDktMDFUMDA6MDA6MDArMDg6MDAiLCJpdGVtVHlwZSI6IlBlcnNvbiIsIm1ldGFkYXRhIjp7fSwicHJvdmlkZXJOYW1lIjoia2xvb2siLCJxdWFudGl0eSI6NX1dLCJkaXNjb3VudENlbnRzIjowLCJtZXRhZGF0YSI6eyJ1c2VyRGVmaW5lZDEiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sInBhcnRuZXJGYWlsdXJlUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJwYXJ0bmVyUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJ0b3RhbEFtb3VudENlbnRzIjo1MDAsInRyYW5zYWN0aW9uSWQiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sImV4cCI6MTc1NTY2MjI4OSwiaWF0IjoxNzU1NjYxMzg5LCJpc3MiOiJodHRwczovL3BheXdpdGgud2FsbGV0Lmdvdi5zZyIsIm5iZiI6MTc1NTY2MTM4OSwibm9uY2UiOiI0ZTQ4Y2I0NTcxMWYtZDVmNi1lNTE0LTAzZDUtMGU4NTMzYmYiLCJyZXN1bHQiOnsic3VjY2Vzc2Z1bFRyYW5zYWN0aW9uIjp7ImdvdndhbGxldFRyYW5zYWN0aW9uSWQiOiI4MzJmMzJmZC1iYjc4LTQzNzgtYTVjZi1mODA1YThjOGJkOWEiLCJwYXltZW50Ijp7ImNyZWRpdHMiOnsiYW1vdW50Q2VudHMiOjQwMCwibmFtZSI6IlNHIEN1bHR1cmUgUGFzcyBjcmVkaXRzIn0sIm91dE9mUG9ja2V0Ijp7ImFtb3VudENlbnRzIjoxMDAsIm1ldGhvZCI6IlBheU5vdyJ9LCJ0b3RhbEFtb3VudENlbnRzIjo1MDB9LCJ1bmlxdWVVc2VySWQiOiJERjcwRkRDQkRGNTlEQTU4MDZBMDYxRkQ0RUY5NkMxQkNENzM2RkJFREM2MUQ0NDEzRDZBRTY3MkJCN0Y5M0E1In19fQ.OJE_Umj7-My-uhvARXdB1hQhGa_gdV18x-SC1Ux8cgjysI_iMkkn2mUE5Wnjy-x-qeGGow_wZu---beADgHMBA" class="link-item">
+            SG Culture Pass payment_callback
+            <span class="link-url">klook://payment_callback/culturepass?invoice_guid=0e4f74ea-539a-4cdc-57d6-1febc6284efe&invoice_submission_guid=e43405c3-8d9b-4d73-5e52-eb7ebdfb7054&order_no=2692317710&platform=android&payload=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1wYWlnbiI6Im1jY3ktY3VsdHVyZS1wYXNzLXByZCIsImNhcnQiOnsiYWRkaXRpb25hbEZlZXNDZW50cyI6MCwiY2FydEV4cGlyeSI6IjIwMjUtMDgtMjBUMDU6Mzg6MzBaIiwiY2FydEl0ZW1zIjpbeyJhZGRpdGlvbmFsRmVlc0NlbnRzIjowLCJhbW91bnRDZW50cyI6NTAwLCJhbW91bnREaXNwbGF5IjoiIiwiZGVzY3JpcHRpb24iOiI1IMOXIFtUZXN0XS1FdmVudG5hbWUtUGVyc29uIGZvciBbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbUVuZERhdGUiOiIyMDI1LTA5LTAxVDAyOjAwOjAwKzA4OjAwIiwiaXRlbUlkIjoiNTc1MTg2IiwiaXRlbU5hbWUiOiJbVGVzdF0tRXZlbnRuYW1lIiwiaXRlbVN0YXJ0RGF0ZSI6IjIwMjUtMDktMDFUMDA6MDA6MDArMDg6MDAiLCJpdGVtVHlwZSI6IlBlcnNvbiIsIm1ldGFkYXRhIjp7fSwicHJvdmlkZXJOYW1lIjoia2xvb2siLCJxdWFudGl0eSI6NX1dLCJkaXNjb3VudENlbnRzIjowLCJtZXRhZGF0YSI6eyJ1c2VyRGVmaW5lZDEiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sInBhcnRuZXJGYWlsdXJlUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJwYXJ0bmVyUmV0dXJuVXJsIjoiaHR0cHM6Ly93d3cua2xvb2suY29tL3dlYjMvcmVkaXJlY3QvcG9zdDJnZXQvP2hyZWY9JTJGZW4tR0IlMkZ3ZWIzJTJGb3JkZXItcGF5bWVudCUyRmN1bHR1cmVwYXNzJTNGaW52b2ljZV9ndWlkJTNEMGU0Zjc0ZWEtNTM5YS00Y2RjLTU3ZDYtMWZlYmM2Mjg0ZWZlJTI2aW52b2ljZV9zdWJtaXNzaW9uX2d1aWQlM0RlNDM0MDVjMy04ZDliLTRkNzMtNWU1Mi1lYjdlYmRmYjcwNTQlMjZvcmRlcl9ubyUzRDI2OTIzMTc3MTAlMjZwbGF0Zm9ybSUzRGFuZHJvaWQiLCJ0b3RhbEFtb3VudENlbnRzIjo1MDAsInRyYW5zYWN0aW9uSWQiOiIyNjkyMzE3NzEwLTg2NTAyYTI0LWQwNmNmYmY5In0sImV4cCI6MTc1NTY2MjI4OSwiaWF0IjoxNzU1NjYxMzg5LCJpc3MiOiJodHRwczovL3BheXdpdGgud2FsbGV0Lmdvdi5zZyIsIm5iZiI6MTc1NTY2MTM4OSwibm9uY2UiOiI0ZTQ4Y2I0NTcxMWYtZDVmNi1lNTE0LTAzZDUtMGU4NTMzYmYiLCJyZXN1bHQiOnsic3VjY2Vzc2Z1bFRyYW5zYWN0aW9uIjp7ImdvdndhbGxldFRyYW5zYWN0aW9uSWQiOiI4MzJmMzJmZC1iYjc4LTQzNzgtYTVjZi1mODA1YThjOGJkOWEiLCJwYXltZW50Ijp7ImNyZWRpdHMiOnsiYW1vdW50Q2VudHMiOjQwMCwibmFtZSI6IlNHIEN1bHR1cmUgUGFzcyBjcmVkaXRzIn0sIm91dE9mUG9ja2V0Ijp7ImFtb3VudENlbnRzIjoxMDAsIm1ldGhvZCI6IlBheU5vdyJ9LCJ0b3RhbEFtb3VudENlbnRzIjo1MDB9LCJ1bmlxdWVVc2VySWQiOiJERjcwRkRDQkRGNTlEQTU4MDZBMDYxRkQ0RUY5NkMxQkNENzM2RkJFREM2MUQ0NDEzRDZBRTY3MkJCN0Y5M0E1In19fQ.OJE_Umj7-My-uhvARXdB1hQhGa_gdV18x-SC1Ux8cgjysI_iMkkn2mUE5Wnjy-x-qeGGow_wZu---beADgHMBA</span>
+        </a>
+        <a href="https://merchant.klook.com/zh-CN/mspa/experiencesadmincommon/act/management" class="link-item">
+            商户"我的活动"页面1
+            <span class="link-url">https://merchant.klook.com/zh-CN/mspa/experiencesadmincommon/act/management</span>
+        </a>
+        <a href="https://mapapi.klook.com/zh-CN/mspa/experiencesadmincommon/act/management" class="link-item">
+            商户"我的活动"页面2
+            <span class="link-url">https://mapapi.klook.com/zh-CN/mspa/experiencesadmincommon/act/management</span>
+        </a>
+        <a href="klook://redeem_callback?success=true&timestamp=12345&caseSeq='1234'" class="link-item">
+            测试艺 fun 券回调
+            <span class="link-url">klook://redeem_callback?success=true&timestamp=12345&caseSeq='1234'</span>
+        </a>
+    </div>
+</body>
+</html>
