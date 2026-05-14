@@ -315,6 +315,26 @@
             transform: translateY(-2px);
         }
 
+        .lang-card.warning:hover {
+            background: #D97706;
+            color: white;
+            border-color: #D97706;
+        }
+
+        .lang-card.warning:hover .lang-char-count {
+            color: white;
+        }
+
+        .lang-card.error:hover {
+            background: #DC2626;
+            color: white;
+            border-color: #DC2626;
+        }
+
+        .lang-card.error:hover .lang-char-count {
+            color: white;
+        }
+
         .lang-card.selected {
             background: var(--primary);
             color: white;
@@ -331,6 +351,53 @@
         .lang-card .lang-name {
             font-size: 0.75rem;
             opacity: 0.8;
+        }
+
+        .lang-card .lang-char-count {
+            font-size: 0.65rem;
+            margin-top: 0.25rem;
+            opacity: 0.7;
+        }
+
+        .lang-card.warning {
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .lang-card.warning .lang-char-count {
+            color: #D97706;
+            font-weight: 600;
+        }
+
+        .lang-card.error {
+            border-color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .lang-card.error .lang-char-count {
+            color: #DC2626;
+            font-weight: 600;
+        }
+
+        /* 选中状态下的警告和错误卡片样式 */
+        .lang-card.selected.warning {
+            background: #F59E0B;
+            border-color: #D97706;
+            color: #1F2937;
+        }
+
+        .lang-card.selected.warning .lang-char-count {
+            color: #1F2937;
+        }
+
+        .lang-card.selected.error {
+            background: #EF4444;
+            border-color: #DC2626;
+            color: white;
+        }
+
+        .lang-card.selected.error .lang-char-count {
+            color: white;
         }
 
         .lang-single-preview {
@@ -1088,6 +1155,19 @@
         // 当前选中的语言
         let selectedLang = null;
 
+        // 检查字符数量状态
+        function getCharCountStatus(content) {
+            const count = content ? content.length : 0;
+            const limit = 500;
+            if (count > limit) {
+                return { count, status: 'error', message: `${count}/${limit} (超出 ${count - limit} 字符)` };
+            } else if (count > limit * 0.9) {
+                return { count, status: 'warning', message: `${count}/${limit}` };
+            } else {
+                return { count, status: 'ok', message: `${count}/${limit}` };
+            }
+        }
+
         // 渲染语言网格
         function renderLangGrid() {
             const langGrid = document.getElementById('langGrid');
@@ -1112,10 +1192,29 @@
             
             displayTags.forEach(tag => {
                 const card = document.createElement('div');
-                card.className = 'lang-card';
+                
+                // 获取字符数量状态
+                let content = '';
+                if (tag === 'en') {
+                    content = langNotes['en-US'] || '';
+                } else {
+                    content = langNotes[tag] || '';
+                }
+                const charStatus = getCharCountStatus(content);
+                
+                // 设置卡片类名
+                let cardClass = 'lang-card';
+                if (charStatus.status === 'error') {
+                    cardClass += ' error';
+                } else if (charStatus.status === 'warning') {
+                    cardClass += ' warning';
+                }
+                
+                card.className = cardClass;
                 card.innerHTML = `
                     <div class="lang-code">${tag}</div>
                     <div class="lang-name">${langDisplayName[tag] || tag}</div>
+                    <div class="lang-char-count">${charStatus.message}</div>
                 `;
                 card.addEventListener('click', () => selectLang(tag));
                 langGrid.appendChild(card);
@@ -1150,7 +1249,18 @@
             const previewTitle = document.getElementById('previewTitle');
             const previewContent = document.getElementById('previewContent');
             
-            previewTitle.textContent = `${displayTag} - ${langDisplayName[displayTag] || displayTag}`;
+            // 获取字符数量状态
+            const charStatus = getCharCountStatus(contentToCopy);
+            
+            // 设置预览标题（包含字符数量）
+            let titleText = `${displayTag} - ${langDisplayName[displayTag] || displayTag}`;
+            if (charStatus.status === 'error') {
+                titleText += ` ⚠️ ${charStatus.message}`;
+            } else {
+                titleText += ` (${charStatus.message})`;
+            }
+            
+            previewTitle.textContent = titleText;
             previewContent.textContent = contentToCopy;
             preview.classList.add('show');
             
